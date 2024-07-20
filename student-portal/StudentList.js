@@ -6,7 +6,7 @@ function StudentList() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/students')
+    axios.get('https://student-profile-poc-30f120e03352.herokuapp.com/api/students')
       .then(response => {
         setStudents(response.data);
         setLoading(false);

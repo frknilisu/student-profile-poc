@@ -7,7 +7,7 @@ function StudentProfile() {
 
   useEffect(() => {
     const studentId = window.location.pathname.split('/').pop();
-    axios.get(`http://localhost:5000/api/students/${studentId}`)
+    axios.get(`https://student-profile-poc-30f120e03352.herokuapp.com/api/students/${studentId}`)
       .then(response => {
         setStudent(response.data);
         setLoading(false);
@@ -19,4 +19,4 @@ function StudentProfile() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    axios.put(`http://localhost:5000/api/students/${student
+    axios.put(`https://student-profile-poc-30f120e03352.herokuapp.com/api/students/${student
