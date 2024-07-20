@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 import sqlite3
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='student-portal/build', static_url_path='')
 
 # Connect to SQLite database
 conn = sqlite3.connect('students.db')
