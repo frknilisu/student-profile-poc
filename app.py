@@ -1,68 +1,63 @@
-from flask import Flask, jsonify, request
+from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 import os
 
-app = Flask(__name__, static_folder='student-portal/build')
-app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "sqlite:///students.db")
-# postgresql://student_06x0_user:E13z4sBPQCWWqCE1wvOQ7PVCTbw3y70Y@dpg-cqf4u988fa8c73ejtivg-a/student_06x0
+app = Flask(__name__)
+
+# Set up the database
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'sqlite:///students.db')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 class Student(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
-    email = db.Column(db.String(100), nullable=False, unique=True)
-    phone = db.Column(db.String(20), nullable=False)
+    name = db.Column(db.String(80), nullable=False)
+    age = db.Column(db.Integer, nullable=False)
+    grade = db.Column(db.String(20), nullable=False)
 
-    def to_dict(self):
-        return {"id": self.id, "name": self.name, "email": self.email, "phone": self.phone}
+    def serialize(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'age': self.age,
+            'grade': self.grade
+        }
 
-# API endpoint to get all students
-@app.route("/api/students", methods=["GET"])
+@app.route('/students', methods=['GET'])
 def get_students():
     students = Student.query.all()
-    return jsonify([student.to_dict() for student in students])
+    return jsonify([student.serialize() for student in students])
 
-# API endpoint to create a new student
-@app.route("/api/students", methods=["POST"])
-def create_student():
-    new_student = Student(
-        name=request.json["name"],
-        email=request.json["email"],
-        phone=request.json["phone"],
-    )
+@app.route('/students/<int:id>', methods=['GET'])
+def get_student(id):
+    student = Student.query.get_or_404(id)
+    return jsonify(student.serialize())
+
+@app.route('/students', methods=['POST'])
+def add_student():
+    data = request.json
+    new_student = Student(name=data['name'], age=data['age'], grade=data['grade'])
     db.session.add(new_student)
     db.session.commit()
-    return jsonify(new_student.to_dict()), 201
+    return jsonify(new_student.serialize()), 201
 
-# API endpoint to get a single student
-@app.route("/api/students/<int:student_id>", methods=["GET"])
-def get_student(student_id):
-    student = Student.query.get(student_id)
-    if student is None:
-        return jsonify({"error": "Student not found"}), 404
-    return jsonify(student.to_dict())
-
-# API endpoint to update a student
-@app.route("/api/students/<int:student_id>", methods=["PUT"])
-def update_student(student_id):
-    student = Student.query.get(student_id)
-    if student is None:
-        return jsonify({"error": "Student not found"}), 404
-    student.name = request.json.get("name", student.name)
-    student.email = request.json.get("email", student.email)
-    student.phone = request.json.get("phone", student.phone)
+@app.route('/students/<int:id>', methods=['PUT'])
+def update_student(id):
+    data = request.json
+    student = Student.query.get_or_404(id)
+    student.name = data['name']
+    student.age = data['age']
+    student.grade = data['grade']
     db.session.commit()
-    return jsonify(student.to_dict())
+    return jsonify(student.serialize())
 
-# API endpoint to delete a student
-@app.route("/api/students/<int:student_id>", methods=["DELETE"])
-def delete_student(student_id):
-    student = Student.query.get(student_id)
-    if student is None:
-        return jsonify({"error": "Student not found"}), 404
+@app.route('/students/<int:id>', methods=['DELETE'])
+def delete_student(id):
+    student = Student.query.get_or_404(id)
     db.session.delete(student)
     db.session.commit()
-    return jsonify({"message": "Student deleted"})
+    return jsonify({'message': 'Student deleted'})
 
-if __name__ == "__main__":
+if __name__ == '__main__':
+    db.create_all()
     app.run(debug=True)
