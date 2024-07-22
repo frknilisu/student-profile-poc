@@ -1,8 +1,10 @@
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
+import os
 
 app = Flask(__name__, static_folder='student-portal/build')
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///students.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "sqlite:///students.db")
+# postgresql://student_06x0_user:E13z4sBPQCWWqCE1wvOQ7PVCTbw3y70Y@dpg-cqf4u988fa8c73ejtivg-a/student_06x0
 db = SQLAlchemy(app)
 
 class Student(db.Model):
