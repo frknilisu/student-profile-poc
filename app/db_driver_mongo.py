@@ -19,12 +19,16 @@ class MongoDBDriver(DatabaseDriverInterface):
         document = self.collection.find_one({"_id": ObjectId(student_id)})
         if document:
             student = Student.from_dict(document)
+            student.student_id = str(document['_id'])
             return student.to_dict()
         return None
     
     def get_all_students(self):
         documents = self.collection.find()
         students = [Student.from_dict(doc).to_dict() for doc in documents]
+        # for student in students:
+        #     student["student_id"] = str(student["_id"])  # Set student_id to MongoDB's _id
+        #     del student["_id"]  # Remove _id field
         return students
 
     def update_student(self, student_id, data):        
