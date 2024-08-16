@@ -6,7 +6,8 @@ import StudentList from './components/StudentList';
 import StudentDetail from './components/StudentDetail';
 import UpdateStudent from './components/UpdateStudent';
 import GroupList from './components/GroupList';
-import GroupDetail from './components/GroupDetail';
+import GroupDetails from './components/GroupDetails';
+import GroupOverview from './components/GroupOverview';
 
 function App() {
   return (
@@ -17,8 +18,8 @@ function App() {
           <Route path="/create" element={<CreateStudent />} />
           <Route path="/student/:id" element={<StudentDetail />} />
           <Route path="/update/:id" element={<UpdateStudent />} />
-          <Route path="/groups" element={<GroupList />} />
-          <Route path="/group/:id" element={<GroupDetail />} />
+          <Route path="/getGroups" element={<GroupOverview />} />
+          <Route path="/getGroup/:id" element={<GroupDetails />} />
         </Routes>
       </div>
     </Router>
