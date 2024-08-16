@@ -21,6 +21,8 @@ class Student:
         }
         if self.student_id:
             data["student_id"] = self.student_id
+        if self.group_id:
+            data["group_id"] = self.group_id
         return data
 
     @classmethod
@@ -32,7 +34,8 @@ class Student:
             school=data.get("school"),
             birthday=data.get("birthday"),
             mobile_number=data.get("mobile_number"),
-            student_id=str(data.get("_id"))
+            student_id=str(data.get("_id")),
+            group_id=data.get("group_id")
         )
 
 
