@@ -1,6 +1,6 @@
 # app/db_interface.py
 from abc import ABC, abstractmethod
-from app.models import Student, Group
+from backend.models import Student, Group
 
 class DatabaseDriverInterface(ABC):
     @abstractmethod

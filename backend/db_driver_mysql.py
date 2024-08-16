@@ -1,6 +1,6 @@
 # app/db_driver_mysql.py
 import mysql.connector
-from app.db_interface import DatabaseDriverInterface
+from backend.db_interface import DatabaseDriverInterface
 
 class MySQLDriver(DatabaseDriverInterface):
     def __init__(self, host="localhost", user="root", password="", database="student_db"):

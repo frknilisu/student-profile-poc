@@ -1,7 +1,7 @@
 # app/routes.py
 from flask import Flask, request, jsonify
-from app.models import Student, Group
-from app.db_driver_mongo import MongoDBDriver
+from backend.models import Student, Group
+from backend.db_driver_mongo import MongoDBDriver
 # from app.db_driver_mysql import MySQLDriver
 
 app = Flask(__name__)

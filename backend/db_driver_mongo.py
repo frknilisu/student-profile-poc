@@ -1,8 +1,8 @@
 # app/db_driver_mongo.py
 from pymongo import MongoClient
 from bson.objectid import ObjectId
-from app.models import Student, Group
-from app.db_interface import DatabaseDriverInterface
+from backend.models import Student, Group
+from backend.db_interface import DatabaseDriverInterface
 
 class MongoDBDriver(DatabaseDriverInterface):
     def __init__(self, db_name="student_db"):
