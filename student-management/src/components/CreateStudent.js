@@ -1,49 +1,117 @@
 // src/components/CreateStudent.js
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { TextField, Button, Container, Typography, Grid, Box } from '@mui/material';
 
 const CreateStudent = () => {
   const [student, setStudent] = useState({
     name: '',
     surname: '',
-    grade: '',
+    class_level: '',
     school: '',
     birthday: '',
-    age: '',
-    mobile_number: ''
+    mobile_number: '',
   });
 
-  const navigate = useNavigate();
-
   const handleChange = (e) => {
-    setStudent({ ...student, [e.target.name]: e.target.value });
+    setStudent({
+      ...student,
+      [e.target.name]: e.target.value,
+    });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/create', student);
-      navigate('/');
+      const response = await axios.post('http://localhost:5000/create', student);
+      console.log('Student created successfully:', response.data);
     } catch (error) {
-      console.error('There was an error creating the student!', error);
+      console.error('Error creating student:', error);
     }
   };
 
   return (
-    <div>
-      <h2>Create Student</h2>
+    <Container maxWidth="sm">
+      <Box sx={{ mt: 5, mb: 3 }}>
+        <Typography variant="h4" component="h1" gutterBottom>
+          Create New Student
+        </Typography>
+      </Box>
       <form onSubmit={handleSubmit}>
-        <input type="text" name="name" placeholder="Name" onChange={handleChange} required />
-        <input type="text" name="surname" placeholder="Surname" onChange={handleChange} required />
-        <input type="text" name="grade" placeholder="Grade" onChange={handleChange} required />
-        <input type="text" name="school" placeholder="School" onChange={handleChange} required />
-        <input type="date" name="birthday" placeholder="Birthday" onChange={handleChange} required />
-        <input type="number" name="age" placeholder="Age" onChange={handleChange} required />
-        <input type="text" name="mobile_number" placeholder="Mobile Number" onChange={handleChange} required />
-        <button type="submit">Create</button>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              label="First Name"
+              name="name"
+              value={student.name}
+              onChange={handleChange}
+              required
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              label="Last Name"
+              name="surname"
+              value={student.surname}
+              onChange={handleChange}
+              required
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              label="Class Level"
+              name="class_level"
+              value={student.class_level}
+              onChange={handleChange}
+              required
+              placeholder="e.g., VWO-3, HAVO-4, ISK"
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              label="School"
+              name="school"
+              value={student.school}
+              onChange={handleChange}
+              required
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              label="Birthday"
+              name="birthday"
+              type="date"
+              value={student.birthday}
+              onChange={handleChange}
+              InputLabelProps={{
+                shrink: true,
+              }}
+              required
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              label="Mobile Number"
+              name="mobile_number"
+              value={student.mobile_number}
+              onChange={handleChange}
+              required
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <Button variant="contained" color="primary" type="submit" fullWidth>
+              Create Student
+            </Button>
+          </Grid>
+        </Grid>
       </form>
-    </div>
+    </Container>
   );
 };
 
