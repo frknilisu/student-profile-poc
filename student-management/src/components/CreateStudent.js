@@ -23,7 +23,7 @@ const CreateStudent = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/create', student);
+      const response = await axios.post('http://localhost:5000/createStudent', student);
       console.log('Student created successfully:', response.data);
     } catch (error) {
       console.error('Error creating student:', error);

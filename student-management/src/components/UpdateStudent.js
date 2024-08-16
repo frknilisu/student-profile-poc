@@ -20,7 +20,7 @@ const UpdateStudent = () => {
   useEffect(() => {
     const fetchStudent = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/getData?student_id=${id}`);
+        const response = await axios.get(`http://localhost:5000/getStudent?student_id=${id}`);
         setStudent(response.data);
       } catch (error) {
         console.error('There was an error fetching the student details!', error);
@@ -37,7 +37,7 @@ const UpdateStudent = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put('http://localhost:5000/update', { student_id: id, ...student });
+      await axios.put('http://localhost:5000/updateStudent', { student_id: id, ...student });
       navigate('/');
     } catch (error) {
       console.error('There was an error updating the student!', error);

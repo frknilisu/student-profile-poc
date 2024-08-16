@@ -11,7 +11,7 @@ const GroupDetails = () => {
   useEffect(() => {
     const fetchGroupDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/groups/${groupId}`);
+        const response = await axios.get(`http://localhost:5000/getGroup/${groupId}`);
         setGroup(response.data);
       } catch (error) {
         console.error('Error fetching group details:', error);

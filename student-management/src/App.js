@@ -2,23 +2,24 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import CreateStudent from './components/CreateStudent';
-import StudentList from './components/StudentList';
-import StudentDetail from './components/StudentDetail';
 import UpdateStudent from './components/UpdateStudent';
-import GroupList from './components/GroupList';
+import StudentsOverview from './components/StudentsOverview';
+import StudentDetails from './components/StudentDetails';
+// import GroupList from './components/GroupList';
 import GroupDetails from './components/GroupDetails';
-import GroupOverview from './components/GroupOverview';
+import GroupsOverview from './components/GroupsOverview';
 
 function App() {
   return (
     <Router>
       <div className="App">
         <Routes>
-          <Route path="/" element={<StudentList />} />
-          <Route path="/create" element={<CreateStudent />} />
-          <Route path="/student/:id" element={<StudentDetail />} />
-          <Route path="/update/:id" element={<UpdateStudent />} />
-          <Route path="/getGroups" element={<GroupOverview />} />
+          <Route path="/" element={<StudentsOverview />} />
+          <Route path="/createStudent" element={<CreateStudent />} />
+          <Route path="/getStudents" element={<StudentsOverview />} />
+          <Route path="/getStudent/:id" element={<StudentDetails />} />
+          <Route path="/updateStudent/:id" element={<UpdateStudent />} />
+          <Route path="/getGroups" element={<GroupsOverview />} />
           <Route path="/getGroup/:id" element={<GroupDetails />} />
         </Routes>
       </div>

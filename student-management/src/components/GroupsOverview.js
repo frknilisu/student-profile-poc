@@ -1,10 +1,10 @@
-// src/components/GroupOverview.js
+// src/components/GroupsOverview.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Grid, Card, CardContent, Typography, Button, Container } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-const GroupOverview = () => {
+const GroupsOverview = () => {
   const [groups, setGroups] = useState([]);
   const navigate = useNavigate();
 
@@ -22,7 +22,7 @@ const GroupOverview = () => {
   }, []);
 
   const handleGroupClick = (groupId) => {
-    navigate.push(`/getGroups/${groupId}`);
+    navigate.push(`/getGroup/${groupId}`);
   };
 
   return (
@@ -53,4 +53,4 @@ const GroupOverview = () => {
   );
 };
 
-export default GroupOverview;
+export default GroupsOverview;

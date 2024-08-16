@@ -1,16 +1,16 @@
-// src/components/StudentDetail.js
+// src/components/StudentDetails.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, Link } from 'react-router-dom';
 
-const StudentDetail = () => {
+const StudentDetails = () => {
   const [student, setStudent] = useState(null);
   const { id } = useParams();
 
   useEffect(() => {
     const fetchStudent = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/getData?student_id=${id}`);
+        const response = await axios.get(`http://localhost:5000/getStudent?student_id=${id}`);
         setStudent(response.data);
       } catch (error) {
         console.error('There was an error fetching the student details!', error);
@@ -22,7 +22,7 @@ const StudentDetail = () => {
 
   return (
     <div>
-      <h2>Student Detail</h2>
+      <h2>Student Details</h2>
       {student ? (
         <div>
           <p>Name: {student.name}</p>
@@ -32,7 +32,7 @@ const StudentDetail = () => {
           <p>Birthday: {student.birthday}</p>
           <p>Age: {student.age}</p>
           <p>Mobile Number: {student.mobile_number}</p>
-          <Link to={`/update/${student.student_id}`}>Update</Link>
+          <Link to={`/updateStudent/${student.student_id}`}>Update</Link>
           <Link to="/">Back to list</Link>
         </div>
       ) : (
@@ -42,4 +42,4 @@ const StudentDetail = () => {
   );
 };
 
-export default StudentDetail;
+export default StudentDetails;

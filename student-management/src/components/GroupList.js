@@ -25,7 +25,7 @@ const GroupList = () => {
       <ul>
         {groups.map(group => (
           <li key={group.group_id}>
-            <Link to={`/group/${group.group_id}`}>
+            <Link to={`/getGroup/${group.group_id}`}>
               {group.group_name} (Leader: {group.leader_id})
             </Link>
             <ul>
