@@ -27,9 +27,6 @@ class MongoDBDriver(DatabaseDriverInterface):
     def get_all_students(self):
         documents = self.students_collection.find()
         students = [Student.from_dict(doc).to_dict() for doc in documents]
-        # for student in students:
-        #     student["student_id"] = str(student["_id"])  # Set student_id to MongoDB's _id
-        #     del student["_id"]  # Remove _id field
         return students
 
     def update_student(self, student_id, data):        
@@ -52,7 +49,6 @@ class MongoDBDriver(DatabaseDriverInterface):
         document = self.groups_collection.find_one({"group_id": group_id})
         if document:
             group = Group.from_dict(document)
-            # group.group_id = str(document['_id'])
             return group.to_dict()
         return None
 

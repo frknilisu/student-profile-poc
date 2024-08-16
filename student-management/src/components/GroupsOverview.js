@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Grid, Card, CardContent, Typography, Button, Container } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const GroupsOverview = () => {
   const [groups, setGroups] = useState([]);
@@ -30,6 +30,10 @@ const GroupsOverview = () => {
       <Typography variant="h4" component="h1" gutterBottom>
         Group Overview
       </Typography>
+      {/* Add the Link to Students Overview */}
+      <Button component={Link} to="/getStudents" variant="outlined" color="primary" sx={{ mb: 3 }}>
+        Go to Students Overview
+      </Button>
       <Grid container spacing={4}>
         {groups.map((group) => (
           <Grid item xs={12} sm={6} md={4} key={group.group_id}>

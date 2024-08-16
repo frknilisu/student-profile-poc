@@ -1,10 +1,12 @@
 // src/components/StudentsOverview.js
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Grid, Card, CardContent, Typography, CardActions, Button, Container } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const StudentsOverview = () => {
   const [students, setStudents] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchStudents = async () => {
@@ -12,35 +14,50 @@ const StudentsOverview = () => {
         const response = await axios.get('http://localhost:5000/getStudents');
         setStudents(response.data);
       } catch (error) {
-        console.error('There was an error fetching the students!', error);
+        console.error('Error fetching students:', error);
       }
     };
 
     fetchStudents();
   }, []);
 
-  const handleDelete = async (id) => {
-    try {
-      await axios.delete(`http://localhost:5000/deleteStudent/${id}`);
-      setStudents(students.filter(student => student.student_id !== id));
-    } catch (error) {
-      console.error('There was an error deleting the student!', error);
-    }
+  const handleViewDetails = (student_id) => {
+    navigate(`/getStudent/${student_id}`);
   };
 
   return (
-    <div>
-      <h2>Student List</h2>
-      <Link to="/createStudent">Create New Student</Link>
-      <ul>
-        {students.map(student => (
-          <li key={student.student_id}>
-            <Link to={`/getStudent/${student.student_id}`}>{student.name} {student.surname}</Link>
-            <button onClick={() => handleDelete(student.student_id)}>Delete</button>
-          </li>
+    <Container maxWidth="lg" sx={{ mt: 5 }}>
+      <Typography variant="h4" component="h1" gutterBottom>
+        Students Overview
+      </Typography>
+      <Grid container spacing={4}>
+        {students.map((student) => (
+          <Grid item xs={12} sm={6} md={4} key={student.student_id}>
+            <Card>
+              <CardContent>
+                <Typography variant="h6">
+                  {student.name} {student.surname}
+                </Typography>
+                <Typography variant="body2" color="textSecondary">
+                  Class Level: {student.class_level}
+                </Typography>
+                <Typography variant="body2" color="textSecondary">
+                  School: {student.school}
+                </Typography>
+                <Typography variant="body2" color="textSecondary">
+                  Group: {student.group_id}
+                </Typography>
+              </CardContent>
+              <CardActions>
+                <Button size="small" color="primary" onClick={() => handleViewDetails(student.student_id)}>
+                  View Details
+                </Button>
+              </CardActions>
+            </Card>
+          </Grid>
         ))}
-      </ul>
-    </div>
+      </Grid>
+    </Container>
   );
 };
 

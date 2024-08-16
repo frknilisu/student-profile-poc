@@ -1,43 +1,63 @@
 // src/components/StudentDetails.js
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import { Container, Typography, Paper, Box, Button } from '@mui/material';
 
 const StudentDetails = () => {
-  const [student, setStudent] = useState(null);
   const { student_id } = useParams();
+  const [student, setStudent] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchStudent = async () => {
+    const fetchStudentDetails = async () => {
       try {
         const response = await axios.get(`http://localhost:5000/getStudent/${student_id}`);
         setStudent(response.data);
       } catch (error) {
-        console.error('There was an error fetching the student details!', error);
+        console.error('Error fetching student details:', error);
       }
     };
 
-    fetchStudent();
+    fetchStudentDetails();
   }, [student_id]);
 
+  const handleBack = () => {
+    navigate('/getStudents');
+  };
+
+  if (!student) {
+    return <Typography>Loading...</Typography>;
+  }
+
   return (
-    <div>
-      <h2>Student Details</h2>
-      {student ? (
-        <div>
-          <p>Name: {student.name}</p>
-          <p>Surname: {student.surname}</p>
-          <p>Grade: {student.grade}</p>
-          <p>School: {student.school}</p>
-          <p>Birthday: {student.birthday}</p>
-          <p>Mobile Number: {student.mobile_number}</p>
-          <Link to={`/updateStudent/${student.student_id}`}>Update</Link>
-          <Link to="/">Back to list</Link>
-        </div>
-      ) : (
-        <p>Loading...</p>
-      )}
-    </div>
+    <Container maxWidth="sm" sx={{ mt: 5 }}>
+      <Paper elevation={3} sx={{ p: 3 }}>
+        <Box sx={{ mb: 2 }}>
+          <Typography variant="h4" component="h1" gutterBottom>
+            {student.name} {student.surname}
+          </Typography>
+          <Typography variant="body1" color="textSecondary">
+            Class Level: {student.class_level}
+          </Typography>
+          <Typography variant="body1" color="textSecondary">
+            School: {student.school}
+          </Typography>
+          <Typography variant="body1" color="textSecondary">
+            Birthday: {student.birthday}
+          </Typography>
+          <Typography variant="body1" color="textSecondary">
+            Mobile Number: {student.mobile_number}
+          </Typography>
+          <Typography variant="body1" color="textSecondary">
+            Group ID: {student.group_id}
+          </Typography>
+        </Box>
+        <Button variant="contained" color="primary" onClick={handleBack}>
+          Back to Overview
+        </Button>
+      </Paper>
+    </Container>
   );
 };
 

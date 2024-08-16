@@ -63,7 +63,7 @@ def get_groups():
 def get_group(group_id):
     group = db_driver.get_group(group_id)
     if group:
-        group['students'] = db_driver.get_students_by_group(group_id)  # Include students in the response
-        return jsonify(group), 200
+        students = db_driver.get_students_by_group(group_id)  # Include students in the response
+        return jsonify({"group": group, "students": students}), 200
     else:
         return jsonify({"message": "Group not found"}), 404
