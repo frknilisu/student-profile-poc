@@ -22,6 +22,10 @@ const StudentDetails = () => {
     fetchStudentDetails();
   }, [student_id]);
 
+  const handleUpdateClick = () => {
+    navigate(`/updateStudent/${student_id}`);
+  };
+
   const handleBack = () => {
     navigate('/getStudents');
   };
@@ -53,7 +57,11 @@ const StudentDetails = () => {
             Group ID: {student.group_id}
           </Typography>
         </Box>
-        <Button variant="contained" color="primary" onClick={handleBack}>
+        {/* <Divider sx={{ my: 2 }} /> */}
+        <Button variant="contained" color="primary" onClick={handleUpdateClick}>
+          Update Student
+        </Button>
+        <Button variant="contained" color="primary" onClick={handleBack} sx={{ ml: 2 }}>
           Back to Overview
         </Button>
       </Paper>
