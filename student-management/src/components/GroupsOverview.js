@@ -21,8 +21,8 @@ const GroupsOverview = () => {
     fetchGroups();
   }, []);
 
-  const handleGroupClick = (groupId) => {
-    navigate.push(`/getGroup/${groupId}`);
+  const handleGroupClick = (group_id) => {
+    navigate(`/getGroup/${group_id}`);
   };
 
   return (

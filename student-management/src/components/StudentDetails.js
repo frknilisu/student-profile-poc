@@ -5,12 +5,12 @@ import { useParams, Link } from 'react-router-dom';
 
 const StudentDetails = () => {
   const [student, setStudent] = useState(null);
-  const { id } = useParams();
+  const { student_id } = useParams();
 
   useEffect(() => {
     const fetchStudent = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/getStudent?student_id=${id}`);
+        const response = await axios.get(`http://localhost:5000/getStudent/${student_id}`);
         setStudent(response.data);
       } catch (error) {
         console.error('There was an error fetching the student details!', error);
@@ -18,7 +18,7 @@ const StudentDetails = () => {
     };
 
     fetchStudent();
-  }, [id]);
+  }, [student_id]);
 
   return (
     <div>
@@ -30,7 +30,6 @@ const StudentDetails = () => {
           <p>Grade: {student.grade}</p>
           <p>School: {student.school}</p>
           <p>Birthday: {student.birthday}</p>
-          <p>Age: {student.age}</p>
           <p>Mobile Number: {student.mobile_number}</p>
           <Link to={`/updateStudent/${student.student_id}`}>Update</Link>
           <Link to="/">Back to list</Link>

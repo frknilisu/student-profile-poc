@@ -19,7 +19,6 @@ def create_student():
 
 @app.route('/getStudents', methods=['GET'])
 def get_students():
-    # Retrieve all students
     all_students = db_driver.get_all_students()
     return jsonify(all_students), 200
 
@@ -60,7 +59,7 @@ def get_groups():
         group['students'] = db_driver.get_students_by_group(group['group_id'])  # Include students in the response
     return jsonify(groups), 200
 
-@app.route('/getGroup/<group_id>', methods=['GET'])
+@app.route('/getGroup/<int:group_id>', methods=['GET'])
 def get_group(group_id):
     group = db_driver.get_group(group_id)
     if group:

@@ -5,13 +5,13 @@ import { useParams } from 'react-router-dom';
 import { Container, Typography, List, ListItem, ListItemText } from '@mui/material';
 
 const GroupDetails = () => {
-  const { groupId } = useParams();
+  const { group_id } = useParams();
   const [group, setGroup] = useState(null);
 
   useEffect(() => {
     const fetchGroupDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/getGroup/${groupId}`);
+        const response = await axios.get(`http://localhost:5000/getGroup/${group_id}`);
         setGroup(response.data);
       } catch (error) {
         console.error('Error fetching group details:', error);
@@ -19,7 +19,7 @@ const GroupDetails = () => {
     };
 
     fetchGroupDetails();
-  }, [groupId]);
+  }, [group_id]);
 
   if (!group) {
     return <Typography>Loading...</Typography>;

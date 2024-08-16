@@ -10,17 +10,16 @@ const UpdateStudent = () => {
     grade: '',
     school: '',
     birthday: '',
-    age: '',
     mobile_number: ''
   });
 
-  const { id } = useParams();
+  const { student_id } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchStudent = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/getStudent?student_id=${id}`);
+        const response = await axios.get(`http://localhost:5000/getStudent/${student_id}`);
         setStudent(response.data);
       } catch (error) {
         console.error('There was an error fetching the student details!', error);
@@ -28,7 +27,7 @@ const UpdateStudent = () => {
     };
 
     fetchStudent();
-  }, [id]);
+  }, [student_id]);
 
   const handleChange = (e) => {
     setStudent({ ...student, [e.target.name]: e.target.value });
@@ -37,7 +36,7 @@ const UpdateStudent = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put('http://localhost:5000/updateStudent', { student_id: id, ...student });
+      await axios.put(`http://localhost:5000/updateStudent/${student_id}`, { ...student });
       navigate('/');
     } catch (error) {
       console.error('There was an error updating the student!', error);
@@ -50,10 +49,9 @@ const UpdateStudent = () => {
       <form onSubmit={handleSubmit}>
         <input type="text" name="name" value={student.name} onChange={handleChange} required />
         <input type="text" name="surname" value={student.surname} onChange={handleChange} required />
-        <input type="text" name="grade" value={student.grade} onChange={handleChange} required />
+        <input type="text" name="class_level" value={student.class_level} onChange={handleChange} required />
         <input type="text" name="school" value={student.school} onChange={handleChange} required />
         <input type="date" name="birthday" value={student.birthday} onChange={handleChange} required />
-        <input type="number" name="age" value={student.age} onChange={handleChange} required />
         <input type="text" name="mobile_number" value={student.mobile_number} onChange={handleChange} required />
         <button type="submit">Update</button>
       </form>

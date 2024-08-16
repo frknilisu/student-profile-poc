@@ -14,13 +14,13 @@ function App() {
     <Router>
       <div className="App">
         <Routes>
-          <Route path="/" element={<StudentsOverview />} />
+          <Route path="/" element={<GroupsOverview />} />
           <Route path="/createStudent" element={<CreateStudent />} />
           <Route path="/getStudents" element={<StudentsOverview />} />
-          <Route path="/getStudent/:id" element={<StudentDetails />} />
-          <Route path="/updateStudent/:id" element={<UpdateStudent />} />
+          <Route path="/getStudent/:student_id" element={<StudentDetails />} />
+          <Route path="/updateStudent/:student_id" element={<UpdateStudent />} />
           <Route path="/getGroups" element={<GroupsOverview />} />
-          <Route path="/getGroup/:id" element={<GroupDetails />} />
+          <Route path="/getGroup/:group_id" element={<GroupDetails />} />
         </Routes>
       </div>
     </Router>
