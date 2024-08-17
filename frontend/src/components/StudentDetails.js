@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Container, Typography, Paper, Box, Button } from '@mui/material';
+import { Container, Typography, Paper, Box, Button, Divider } from '@mui/material';
 
 const StudentDetails = () => {
   const { student_id } = useParams();
@@ -57,7 +57,7 @@ const StudentDetails = () => {
             Group ID: {student.group_id}
           </Typography>
         </Box>
-        {/* <Divider sx={{ my: 2 }} /> */}
+        <Divider sx={{ my: 2 }} />
         <Button variant="contained" color="primary" onClick={handleUpdateClick}>
           Update Student
         </Button>

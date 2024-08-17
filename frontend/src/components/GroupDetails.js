@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Container, Typography, Paper, Box, List, ListItem, ListItemText, Divider, Button } from '@mui/material';
+import { Container, Typography, Paper, Box, Grid, List, ListItem, ListItemText, Divider, Button } from '@mui/material';
 
 const GroupDetails = () => {
   const { group_id } = useParams();
@@ -28,6 +28,10 @@ const GroupDetails = () => {
     navigate(`/getStudent/${student_id}`);
   };
 
+  const handleUpdateClick = () => {
+    navigate(`/updateGroup/${group_id}`);
+  };
+
   const handleBack = () => {
     navigate('/');
   };
@@ -49,30 +53,45 @@ const GroupDetails = () => {
         </Box>
         <Divider />
         <Box sx={{ mt: 2 }}>
-          <Typography variant="h5" gutterBottom>
-            Students
-          </Typography>
-          <List>
-            {students.map((student) => (
-              <ListItem key={student.student_id}>
-                <Button
-                  variant="text"
-                  color="primary"
-                  onClick={() => handleStudentClick(student.student_id)}
-                  sx={{ textTransform: 'none', justifyContent: 'flex-start' }}
-                  fullWidth
-                >
-                  <ListItemText
-                    primary={`${student.name} ${student.surname}`}
-                    sx={{ textDecoration: 'underline' }}
-                  />
-                </Button>
-              </ListItem>
+          {/* Student Names in a Grid with Equal Space */}
+          <Grid container spacing={1}>
+            {students.map((student, index) => (
+              <Grid item xs={6} key={index}>
+                <Box 
+                  sx={{ 
+                    border: '1px solid #ccc', 
+                    borderRadius: '4px', 
+                    padding: '4px', 
+                    textAlign: 'center',
+                    height: '40px', // Fixed height for equal spacing
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    cursor: 'pointer', // Make it clickable
+                    transition: 'transform 0.2s, background-color 0.2s', // Smooth transition for hover and click
+                    '&:hover': {
+                      backgroundColor: '#f0f0f0', // Light grey on hover
+                      transform: 'scale(1.05)', // Slight zoom on hover
+                    },
+                    '&:active': {
+                      transform: 'scale(0.95)', // Slight shrink on click
+                    },
+                  }}
+                  onClick={() => handleStudentClick(student.student_id)} // Navigate to StudentDetails page
+                  >
+                  <Typography variant="body2" component="p">
+                    {student.name} {student.surname}
+                  </Typography>
+                </Box>
+              </Grid>
             ))}
-          </List>
+          </Grid>
         </Box>
         <Divider sx={{ my: 2 }} />
-        <Button variant="contained" color="primary" onClick={handleBack}>
+        <Button variant="contained" color="primary" onClick={handleUpdateClick}>
+          Update Group
+        </Button>
+        <Button variant="contained" color="primary" onClick={handleBack} sx={{ ml: 2 }}>
           Back to Overview
         </Button>
       </Paper>

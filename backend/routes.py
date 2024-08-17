@@ -67,3 +67,14 @@ def get_group(group_id):
         return jsonify({"group": group, "students": students}), 200
     else:
         return jsonify({"message": "Group not found"}), 404
+
+@app.route('/updateGroup/<group_id>', methods=['PUT'])
+def update_group(group_id):
+    update_data = request.json
+    db_driver.update_group(group_id, update_data)
+    return jsonify({"message": "Group updated"}), 200
+
+@app.route('/deleteGroup/<group_id>', methods=['DELETE'])
+def delete_group(group_id):
+    db_driver.delete_group(group_id)
+    return jsonify({"message": "Group deleted"}), 200

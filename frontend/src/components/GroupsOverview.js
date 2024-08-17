@@ -1,7 +1,7 @@
 // src/components/GroupsOverview.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Grid, Card, CardContent, Typography, Button, Container, Box } from '@mui/material';
+import { Grid, Card, CardContent, Typography, Button, Container, Box, Divider } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 const GroupsOverview = () => {
@@ -40,7 +40,7 @@ const GroupsOverview = () => {
                 <Typography variant="h6" component="h2" gutterBottom>
                   {group.supervisor_name}'s Group
                 </Typography>
-
+                <Divider sx={{ my: 2 }} />
                 {/* Student Names in a Grid with Equal Space */}
                 <Grid container spacing={1}>
                   {group.students.map((student, index) => (
@@ -74,7 +74,7 @@ const GroupsOverview = () => {
                     </Grid>
                   ))}
                 </Grid>
-
+                <Divider sx={{ my: 2 }} />
                 {/* View Details Button */}
                 <Box mt={2} textAlign="center">
                   <Button

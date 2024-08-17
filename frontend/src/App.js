@@ -8,7 +8,7 @@ import UpdateStudent from './components/UpdateStudent';
 // import CreateGroup from './components/CreateGroup';
 import GroupsOverview from './components/GroupsOverview';
 import GroupDetails from './components/GroupDetails';
-// import UpdateGroup from './components/UpdateGroup';
+import UpdateGroup from './components/UpdateGroup';
 import Navbar from './components/Navbar';
 
 function App() {
@@ -25,7 +25,7 @@ function App() {
           {/* <Route path="/createGroup" element={<CreateGroup />} /> */}
           <Route path="/getGroups" element={<GroupsOverview />} />
           <Route path="/getGroup/:group_id" element={<GroupDetails />} />
-          {/* <Route path="/updateGroup/:group_id" element={<UpdateGroup />} /> */}
+          <Route path="/updateGroup/:group_id" element={<UpdateGroup />} />
         </Routes>
       {/* </div> */}
     </Router>
