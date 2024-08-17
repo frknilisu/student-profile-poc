@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { TextField, Button, Container, Typography, Grid, Box } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const CreateStudent = () => {
   const [student, setStudent] = useState({
@@ -12,6 +13,7 @@ const CreateStudent = () => {
     birthday: '',
     mobile_number: '',
   });
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setStudent({
@@ -25,6 +27,8 @@ const CreateStudent = () => {
     try {
       const response = await axios.post('http://localhost:5000/createStudent', student);
       console.log('Student created successfully:', response.data);
+      var student_id = response.data.student_id;
+      navigate(`/getStudent/${student_id}`);
     } catch (error) {
       console.error('Error creating student:', error);
     }
