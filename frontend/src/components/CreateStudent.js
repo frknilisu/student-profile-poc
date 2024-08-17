@@ -1,8 +1,22 @@
 // src/components/CreateStudent.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { TextField, Button, Container, Typography, Grid, Box } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+// import { Container, Typography, TextField, Button, Paper, Box, Divider } from '@mui/material';
+import {
+  Container,
+  Typography,
+  TextField,
+  Button,
+  Paper,
+  Box,
+  Divider,
+  MenuItem,
+  Select,
+  InputLabel,
+  FormControl,
+  Grid
+} from '@mui/material';
 
 const CreateStudent = () => {
   const [student, setStudent] = useState({
@@ -12,8 +26,24 @@ const CreateStudent = () => {
     school: '',
     birthday: '',
     mobile_number: '',
+    group_id: '',
   });
+  // const [form, setForm] = useState({});
+  const [groups, setGroups] = useState([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchGroups = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/getGroups');
+        setGroups(response.data);
+      } catch (error) {
+        console.error('Error fetching groups:', error);
+      }
+    };
+
+    fetchGroups();
+  }, []);
 
   const handleChange = (e) => {
     setStudent({
@@ -107,6 +137,22 @@ const CreateStudent = () => {
               onChange={handleChange}
               required
             />
+          </Grid>
+          <Grid item xs={12}>
+            <FormControl fullWidth margin="normal">
+              <InputLabel>Group</InputLabel>
+              <Select
+                name="group_id"
+                value={student.group_id || ''}
+                onChange={handleChange}
+              >
+                {groups.map((group) => (
+                  <MenuItem key={group.group_id} value={group.group_id}>
+                    {`Group ${group.group_id} - ${group.supervisor_name}`}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           </Grid>
           <Grid item xs={12}>
             <Button variant="contained" color="primary" type="submit" fullWidth>
