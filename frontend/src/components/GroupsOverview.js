@@ -74,9 +74,9 @@ const GroupsOverview = () => {
                     </Grid>
                   ))}
                 </Grid>
-                <Divider sx={{ my: 2 }} />
+                {/* <Divider sx={{ my: 2 }} /> */}
                 {/* View Details Button */}
-                <Box mt={2} textAlign="center">
+                {/* <Box mt={2} textAlign="center">
                   <Button
                     variant="contained"
                     onClick={() => handleGroupClick(group.group_id)}
@@ -84,7 +84,7 @@ const GroupsOverview = () => {
                   >
                     View Details
                   </Button>
-                </Box>
+                </Box> */}
               </CardContent>
             </Card>
           </Grid>
