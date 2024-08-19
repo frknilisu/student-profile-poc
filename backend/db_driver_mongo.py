@@ -58,12 +58,12 @@ class MongoDBDriver(DatabaseDriverInterface):
         return groups
 
     def update_group(self, group_id, data):
-        self.groups_collection.update_one({"group_id": group_id}, {"$set": data})
+        self.groups_collection.update_one({"group_id": int(group_id)}, {"$set": data})
 
     def delete_group(self, group_id):
-        self.groups_collection.delete_one({"group_id": group_id})
+        self.groups_collection.delete_one({"group_id": int(group_id)})
 
     def get_students_by_group(self, group_id):
-        documents = self.students_collection.find({"group_id": group_id})
+        documents = self.students_collection.find({"group_id": int(group_id)})
         students = [Student.from_dict(doc).to_dict() for doc in documents]
         return students

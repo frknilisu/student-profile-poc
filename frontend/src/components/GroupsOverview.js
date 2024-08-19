@@ -1,7 +1,7 @@
 // src/components/GroupsOverview.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Grid, Card, CardContent, Typography, Button, Container, Box, Divider } from '@mui/material';
+import { Grid, Card, CardContent, Typography, Container, Box, Divider } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 const GroupsOverview = () => {
@@ -34,7 +34,22 @@ const GroupsOverview = () => {
       <Grid container spacing={2}>
         {groups.map((group) => (
           <Grid item xs={12} sm={6} md={4} lg={3} key={group.group_id}>
-            <Card sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: 'auto' }}>
+            <Card
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                height: 'auto',
+                cursor: 'pointer',
+                border: '1px solid #ddd',
+                '&:hover': {
+                  borderColor: '#1976d2',
+                  boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
+                }
+              }}
+              onClick={() => handleGroupClick(group.group_id)}
+            >
+            {/* <Card sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: 'auto' }}> */}
               <CardContent sx={{ padding: 2 }}>
                 {/* Supervisor Name */}
                 <Typography variant="h6" component="h2" gutterBottom>
@@ -65,7 +80,10 @@ const GroupsOverview = () => {
                             transform: 'scale(0.95)', // Slight shrink on click
                           },
                         }}
-                        onClick={() => handleStudentClick(student.student_id)} // Navigate to StudentDetails page
+                        onClick={(e) => {
+                          e.stopPropagation(); // Prevent triggering the card click
+                          handleStudentClick(student.student_id);
+                        }}
                         >
                         <Typography variant="body2" component="p">
                           {student.name} {student.surname}
@@ -74,17 +92,6 @@ const GroupsOverview = () => {
                     </Grid>
                   ))}
                 </Grid>
-                {/* <Divider sx={{ my: 2 }} /> */}
-                {/* View Details Button */}
-                {/* <Box mt={2} textAlign="center">
-                  <Button
-                    variant="contained"
-                    onClick={() => handleGroupClick(group.group_id)}
-                    size="small"
-                  >
-                    View Details
-                  </Button>
-                </Box> */}
               </CardContent>
             </Card>
           </Grid>

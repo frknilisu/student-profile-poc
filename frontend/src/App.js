@@ -5,7 +5,7 @@ import CreateStudent from './components/CreateStudent';
 import StudentsOverview from './components/StudentsOverview';
 import StudentDetails from './components/StudentDetails';
 import UpdateStudent from './components/UpdateStudent';
-// import CreateGroup from './components/CreateGroup';
+import CreateGroup from './components/CreateGroup';
 import GroupsOverview from './components/GroupsOverview';
 import GroupDetails from './components/GroupDetails';
 import UpdateGroup from './components/UpdateGroup';
@@ -22,7 +22,7 @@ function App() {
           <Route path="/getStudents" element={<StudentsOverview />} />
           <Route path="/getStudent/:student_id" element={<StudentDetails />} />
           <Route path="/updateStudent/:student_id" element={<UpdateStudent />} />
-          {/* <Route path="/createGroup" element={<CreateGroup />} /> */}
+          <Route path="/createGroup" element={<CreateGroup />} />
           <Route path="/getGroups" element={<GroupsOverview />} />
           <Route path="/getGroup/:group_id" element={<GroupDetails />} />
           <Route path="/updateGroup/:group_id" element={<UpdateGroup />} />
