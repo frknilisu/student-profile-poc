@@ -1,6 +1,5 @@
 // src/components/StudentsOverview.js
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { TextField, Grid, Card, CardContent, Typography, Container, MenuItem, Select, InputLabel, InputAdornment, FormControl, Box, CardActions, Button } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from 'react-router-dom';

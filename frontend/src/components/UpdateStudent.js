@@ -1,8 +1,6 @@
 // src/components/UpdateStudent.js
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
-// import { Container, Typography, TextField, Button, Paper, Box, Divider } from '@mui/material';
 import {
   Container,
   Typography,
@@ -96,16 +94,6 @@ const UpdateStudent = () => {
             margin="normal"
           />
           <TextField
-            label="Birthday"
-            type="date"
-            name="birthday"
-            value={form.birthday ? form.birthday.split('T')[0] : ''}
-            onChange={handleInputChange}
-            fullWidth
-            margin="normal"
-            InputLabelProps={{ shrink: true }}
-          />
-          <TextField
             label="Class Level"
             name="class_level"
             value={form.class_level || ''}
@@ -122,9 +110,43 @@ const UpdateStudent = () => {
             margin="normal"
           />
           <TextField
+            label="Birthday"
+            type="date"
+            name="birthday"
+            value={form.birthday ? form.birthday.split('T')[0] : ''}
+            onChange={handleInputChange}
+            fullWidth
+            margin="normal"
+            InputLabelProps={{ shrink: true }}
+          />
+          <TextField
             label="Mobile Number"
             name="mobile_number"
             value={form.mobile_number || ''}
+            onChange={handleInputChange}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="Address"
+            name="address"
+            value={form.address || ''}
+            onChange={handleInputChange}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="Parent Name"
+            name="parent_name"
+            value={form.parent_name || ''}
+            onChange={handleInputChange}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="Parent Number"
+            name="parent_number"
+            value={form.parent_number || ''}
             onChange={handleInputChange}
             fullWidth
             margin="normal"

@@ -1,6 +1,5 @@
 // src/components/StudentDetails.js
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Container, Typography, Paper, Box, Button, Divider } from '@mui/material';
 import { getStudent } from '../services/studentService';
@@ -53,6 +52,15 @@ const StudentDetails = () => {
           </Typography>
           <Typography variant="body1" color="textSecondary">
             Mobile Number: {student.mobile_number}
+          </Typography>
+          <Typography variant="body1" color="textSecondary">
+            Address: {student.address}
+          </Typography>
+          <Typography variant="body1" color="textSecondary">
+            Parent Name: {student.parent_name}
+          </Typography>
+          <Typography variant="body1" color="textSecondary">
+            Parent Number: {student.parent_number}
           </Typography>
           <Typography variant="body1" color="textSecondary">
             Group ID: {student.group_id}

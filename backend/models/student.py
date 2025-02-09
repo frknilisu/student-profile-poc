@@ -3,7 +3,6 @@ from bson import ObjectId
 class Student:
     def __init__(self, name, surname, class_level, school, birthday, mobile_number, address, parent_name, parent_number, group_id=None, _id=None):
         self._id = ObjectId(_id) if _id else None
-        self._id = ObjectId(_id) if _id and ObjectId.is_valid(_id) else None
         self.name = name
         self.surname = surname
         self.class_level = class_level

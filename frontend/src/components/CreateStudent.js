@@ -1,16 +1,12 @@
 // src/components/CreateStudent.js
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useParams, useNavigate } from 'react-router-dom';
-// import { Container, Typography, TextField, Button, Paper, Box, Divider } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import {
   Container,
   Typography,
   TextField,
   Button,
-  Paper,
   Box,
-  Divider,
   MenuItem,
   Select,
   InputLabel,
@@ -28,6 +24,9 @@ const CreateStudent = () => {
     school: '',
     birthday: '',
     mobile_number: '',
+    address: '',
+    parent_name: '',
+    parent_number: '',
     group_id: '',
   });
   // const [form, setForm] = useState({});
@@ -137,6 +136,36 @@ const CreateStudent = () => {
               label="Mobile Number"
               name="mobile_number"
               value={student.mobile_number}
+              onChange={handleChange}
+              required
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              label="Address"
+              name="address"
+              value={student.address}
+              onChange={handleChange}
+              required
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              label="Parent Name"
+              name="parent_name"
+              value={student.parent_name}
+              onChange={handleChange}
+              required
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              label="Parent Number"
+              name="parent_number"
+              value={student.parent_number}
               onChange={handleChange}
               required
             />
