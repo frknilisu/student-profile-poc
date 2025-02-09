@@ -16,6 +16,7 @@ import {
   InputLabel,
   FormControl
 } from '@mui/material';
+import { getGroup, updateGroup } from '../services/groupService';
 
 
 const UpdateGroup = () => {
@@ -27,7 +28,7 @@ const UpdateGroup = () => {
   useEffect(() => {
     const fetchGroupDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/getGroup/${group_id}`);
+        const response = await getGroup(group_id);
         setGroup(response.data.group);
         setForm(response.data.group);
       } catch (error) {
@@ -48,7 +49,7 @@ const UpdateGroup = () => {
 
   const handleSave = async () => {
     try {
-      await axios.put(`http://localhost:5000/updateGroup/${group_id}`, form);
+      await updateGroup(group_id, form);
       navigate(`/getGroup/${group_id}`);
     } catch (error) {
       console.error('Error updating student:', error);

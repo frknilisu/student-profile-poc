@@ -17,6 +17,8 @@ import {
   FormControl,
   Grid
 } from '@mui/material';
+import { createStudent } from '../services/studentService';
+import { getGroups } from '../services/groupService';
 
 const CreateStudent = () => {
   const [student, setStudent] = useState({
@@ -35,7 +37,7 @@ const CreateStudent = () => {
   useEffect(() => {
     const fetchGroups = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/getGroups');
+        const response = await getGroups();
         setGroups(response.data);
       } catch (error) {
         console.error('Error fetching groups:', error);
@@ -55,7 +57,7 @@ const CreateStudent = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/createStudent', student);
+      const response = await createStudent(student);
       console.log('Student created successfully:', response.data);
       var student_id = response.data.student_id;
       navigate(`/getStudent/${student_id}`);
@@ -120,6 +122,7 @@ const CreateStudent = () => {
               label="Birthday"
               name="birthday"
               type="date"
+              defaultValue={"2000-01-01"}
               value={student.birthday}
               onChange={handleChange}
               InputLabelProps={{

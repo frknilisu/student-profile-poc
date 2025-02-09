@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Container, Typography, Paper, Box, Button, Divider } from '@mui/material';
+import { getStudent } from '../services/studentService';
 
 const StudentDetails = () => {
   const { student_id } = useParams();
@@ -12,7 +13,7 @@ const StudentDetails = () => {
   useEffect(() => {
     const fetchStudentDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/getStudent/${student_id}`);
+        const response = await getStudent(student_id);
         setStudent(response.data);
       } catch (error) {
         console.error('Error fetching student details:', error);

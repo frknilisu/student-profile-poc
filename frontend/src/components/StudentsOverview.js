@@ -4,6 +4,7 @@ import axios from 'axios';
 import { TextField, Grid, Card, CardContent, Typography, Container, MenuItem, Select, InputLabel, InputAdornment, FormControl, Box, CardActions, Button } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from 'react-router-dom';
+import { getStudents } from '../services/studentService';
 
 const StudentsOverview = () => {
   const [students, setStudents] = useState([]);
@@ -15,7 +16,7 @@ const StudentsOverview = () => {
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/getStudents');
+        const response = await getStudents();
         setStudents(response.data);
         setFilteredStudents(response.data);
       } catch (error) {

@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Container, TextField, Button, Typography, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { createGroup } from '../services/groupService';
 
 const CreateGroup = () => {
   const [supervisorName, setSupervisorName] = useState('');
@@ -11,7 +12,7 @@ const CreateGroup = () => {
   
   const handleCreateGroup = async () => {
     try {
-      await axios.post('http://localhost:5000/createGroup', {
+      await createGroup({
         supervisor_name: supervisorName,
         group_id: group_id
       });

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Container, Typography, Paper, Box, Grid, List, ListItem, ListItemText, Divider, Button } from '@mui/material';
+import { getGroup } from '../services/groupService';
 
 const GroupDetails = () => {
   const { group_id } = useParams();
@@ -13,7 +14,7 @@ const GroupDetails = () => {
   useEffect(() => {
     const fetchGroupDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/getGroup/${group_id}`);
+        const response = await getGroup(group_id);
         setGroup(response.data.group);
         setStudents(response.data.students);
       } catch (error) {

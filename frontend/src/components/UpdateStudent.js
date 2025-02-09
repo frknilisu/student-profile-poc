@@ -16,6 +16,8 @@ import {
   InputLabel,
   FormControl
 } from '@mui/material';
+import { getStudent, updateStudent } from '../services/studentService';
+import { getGroups } from '../services/groupService';
 
 
 const UpdateStudent = () => {
@@ -28,7 +30,7 @@ const UpdateStudent = () => {
   useEffect(() => {
     const fetchStudentDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/getStudent/${student_id}`);
+        const response = await getStudent(student_id);
         setStudent(response.data);
         setForm(response.data);
       } catch (error) {
@@ -38,7 +40,7 @@ const UpdateStudent = () => {
 
     const fetchGroups = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/getGroups'); // Replace with your actual endpoint
+        const response = await getGroups();
         setGroups(response.data);
       } catch (error) {
         console.error('Error fetching groups:', error);
@@ -59,7 +61,7 @@ const UpdateStudent = () => {
 
   const handleSave = async () => {
     try {
-      await axios.put(`http://localhost:5000/updateStudent/${student_id}`, form);
+      await updateStudent(student_id, form);
       navigate(`/getStudent/${student_id}`);
     } catch (error) {
       console.error('Error updating student:', error);

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Grid, Card, CardContent, Typography, Container, Box, Divider } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { getGroups } from '../services/groupService';
 
 const GroupsOverview = () => {
   const [groups, setGroups] = useState([]);
@@ -11,7 +12,7 @@ const GroupsOverview = () => {
   useEffect(() => {
     const fetchGroups = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/getGroups');
+        const response = await getGroups();
         setGroups(response.data);
       } catch (error) {
         console.error('Error fetching groups:', error);
