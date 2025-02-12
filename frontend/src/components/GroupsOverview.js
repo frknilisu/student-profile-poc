@@ -4,9 +4,11 @@ import axios from 'axios';
 import { Grid, Card, CardContent, Typography, Container, Box, Divider } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { getGroups } from '../services/groupService';
+import { getStudents } from '../services/studentService';
 
 const GroupsOverview = () => {
   const [groups, setGroups] = useState([]);
+  const [students, setStudents] = useState({});
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,7 +21,17 @@ const GroupsOverview = () => {
       }
     };
 
+    const fetchStudents = async () => {
+      try {
+        const response = await getStudents();
+        setStudents(response.data);
+      } catch (error) {
+        console.error('Error fetching students:', error);
+      }
+    };
+
     fetchGroups();
+    fetchStudents();
   }, []);
 
   const handleGroupClick = (group_id) => {
@@ -50,7 +62,6 @@ const GroupsOverview = () => {
               }}
               onClick={() => handleGroupClick(group.group_id)}
             >
-            {/* <Card sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: 'auto' }}> */}
               <CardContent sx={{ padding: 2 }}>
                 {/* Supervisor Name */}
                 <Typography variant="h6" component="h2" gutterBottom>
@@ -59,7 +70,7 @@ const GroupsOverview = () => {
                 <Divider sx={{ my: 2 }} />
                 {/* Student Names in a Grid with Equal Space */}
                 <Grid container spacing={1}>
-                  {group.students.map((student, index) => (
+                  {group.student_ids.map((student_id, index) => (
                     <Grid item xs={6} key={index}>
                       <Box 
                         sx={{ 
@@ -83,11 +94,11 @@ const GroupsOverview = () => {
                         }}
                         onClick={(e) => {
                           e.stopPropagation(); // Prevent triggering the card click
-                          handleStudentClick(student.student_id);
+                          handleStudentClick(student_id);
                         }}
                         >
                         <Typography variant="body2" component="p">
-                          {student.name} {student.surname}
+                          {students[student_id]?.name} {students[student_id]?.surname}
                         </Typography>
                       </Box>
                     </Grid>
