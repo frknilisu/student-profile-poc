@@ -130,7 +130,7 @@ const StudentsOverview = () => {
                 </Typography>
               </CardContent>
               <CardActions>
-                <Button size="small" color="primary" onClick={() => handleViewDetails(student.student_id)}>
+                <Button size="small" color="primary" onClick={() => handleViewDetails(student._id)}>
                   View Details
                 </Button>
               </CardActions>

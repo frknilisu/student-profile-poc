@@ -27,7 +27,7 @@ const CreateStudent = () => {
     address: '',
     parent_name: '',
     parent_number: '',
-    group_id: '',
+    // supervisor_name: '',
   });
   // const [form, setForm] = useState({});
   const [groups, setGroups] = useState([]);
@@ -57,8 +57,8 @@ const CreateStudent = () => {
     e.preventDefault();
     try {
       const response = await createStudent(student);
-      console.log('Student created successfully:', response.data);
-      var student_id = response.data.student_id;
+      alert('Student created successfully');
+      var student_id = response.data.id;
       navigate(`/getStudent/${student_id}`);
     } catch (error) {
       console.error('Error creating student:', error);
@@ -170,7 +170,7 @@ const CreateStudent = () => {
               required
             />
           </Grid>
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}>
             <FormControl fullWidth margin="normal">
               <InputLabel>Group</InputLabel>
               <Select
@@ -185,7 +185,7 @@ const CreateStudent = () => {
                 ))}
               </Select>
             </FormControl>
-          </Grid>
+          </Grid> */}
           <Grid item xs={12}>
             <Button variant="contained" color="primary" type="submit" fullWidth>
               Create Student

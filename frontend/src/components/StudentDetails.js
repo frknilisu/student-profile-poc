@@ -62,9 +62,9 @@ const StudentDetails = () => {
           <Typography variant="body1" color="textSecondary">
             Parent Number: {student.parent_number}
           </Typography>
-          <Typography variant="body1" color="textSecondary">
+          {/* <Typography variant="body1" color="textSecondary">
             Group ID: {student.group_id}
-          </Typography>
+          </Typography> */}
         </Box>
         <Divider sx={{ my: 2 }} />
         <Button variant="contained" color="primary" onClick={handleUpdateClick}>
