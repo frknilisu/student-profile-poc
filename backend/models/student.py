@@ -1,8 +1,9 @@
 from bson import ObjectId
 
 class Student:
-    def __init__(self, name, surname, class_level, school, birthday, mobile_number, address, parent_name, parent_number, group_id=None, _id=None):
-        self._id = ObjectId(_id) if _id else None
+    def __init__(self, name, surname, class_level, school, birthday, mobile_number, address, parent_name, parent_number, supervisor_name="", _id=None):
+        if _id:
+            self._id = ObjectId(_id)
         self.name = name
         self.surname = surname
         self.class_level = class_level
@@ -12,11 +13,11 @@ class Student:
         self.address = address
         self.parent_name = parent_name
         self.parent_number = parent_number
-        self.group_id = ObjectId(group_id) if group_id else None
+        # self.is_active = True if group_id else False
+        # self.supervisor_name = supervisor_name
 
     def to_dict(self):
-        return {
-            "_id": str(self._id),
+        data = {
             "name": self.name,
             "surname": self.surname,
             "class_level": self.class_level,
@@ -26,5 +27,9 @@ class Student:
             "address": self.address,
             "parent_name": self.parent_name,
             "parent_number": self.parent_number,
-            "group_id": str(self.group_id) if self.group_id else None
+            # "supervisor_name": self.supervisor_name
         }
+        if hasattr(self, '_id') and self._id:
+            data["_id"] = str(self._id)
+        return data
+
