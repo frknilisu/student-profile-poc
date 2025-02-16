@@ -1,22 +1,16 @@
 // src/components/CreateStudent.js
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useParams, useNavigate } from 'react-router-dom';
-// import { Container, Typography, TextField, Button, Paper, Box, Divider } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import {
   Container,
   Typography,
   TextField,
   Button,
-  Paper,
   Box,
-  Divider,
-  MenuItem,
-  Select,
-  InputLabel,
-  FormControl,
   Grid
 } from '@mui/material';
+import { createStudent } from '../services/studentService';
+import { getGroups } from '../services/groupService';
 
 const CreateStudent = () => {
   const [student, setStudent] = useState({
@@ -26,7 +20,10 @@ const CreateStudent = () => {
     school: '',
     birthday: '',
     mobile_number: '',
-    group_id: '',
+    address: '',
+    parent_name: '',
+    parent_number: '',
+    // supervisor_name: '',
   });
   // const [form, setForm] = useState({});
   const [groups, setGroups] = useState([]);
@@ -35,7 +32,7 @@ const CreateStudent = () => {
   useEffect(() => {
     const fetchGroups = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/getGroups');
+        const response = await getGroups();
         setGroups(response.data);
       } catch (error) {
         console.error('Error fetching groups:', error);
@@ -55,9 +52,9 @@ const CreateStudent = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/createStudent', student);
-      console.log('Student created successfully:', response.data);
-      var student_id = response.data.student_id;
+      const response = await createStudent(student);
+      alert('Student created successfully');
+      var student_id = response.data.id;
       navigate(`/getStudent/${student_id}`);
     } catch (error) {
       console.error('Error creating student:', error);
@@ -120,6 +117,7 @@ const CreateStudent = () => {
               label="Birthday"
               name="birthday"
               type="date"
+              defaultValue={"2000-01-01"}
               value={student.birthday}
               onChange={handleChange}
               InputLabelProps={{
@@ -139,6 +137,36 @@ const CreateStudent = () => {
             />
           </Grid>
           <Grid item xs={12}>
+            <TextField
+              fullWidth
+              label="Address"
+              name="address"
+              value={student.address}
+              onChange={handleChange}
+              required
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              label="Parent Name"
+              name="parent_name"
+              value={student.parent_name}
+              onChange={handleChange}
+              required
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              fullWidth
+              label="Parent Number"
+              name="parent_number"
+              value={student.parent_number}
+              onChange={handleChange}
+              required
+            />
+          </Grid>
+          {/* <Grid item xs={12}>
             <FormControl fullWidth margin="normal">
               <InputLabel>Group</InputLabel>
               <Select
@@ -153,7 +181,7 @@ const CreateStudent = () => {
                 ))}
               </Select>
             </FormControl>
-          </Grid>
+          </Grid> */}
           <Grid item xs={12}>
             <Button variant="contained" color="primary" type="submit" fullWidth>
               Create Student

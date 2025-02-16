@@ -1,8 +1,6 @@
 // src/components/UpdateStudent.js
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
-// import { Container, Typography, TextField, Button, Paper, Box, Divider } from '@mui/material';
 import {
   Container,
   Typography,
@@ -16,6 +14,8 @@ import {
   InputLabel,
   FormControl
 } from '@mui/material';
+import { getStudent, updateStudent } from '../services/studentService';
+import { getGroups } from '../services/groupService';
 
 
 const UpdateStudent = () => {
@@ -28,7 +28,7 @@ const UpdateStudent = () => {
   useEffect(() => {
     const fetchStudentDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/getStudent/${student_id}`);
+        const response = await getStudent(student_id);
         setStudent(response.data);
         setForm(response.data);
       } catch (error) {
@@ -38,7 +38,7 @@ const UpdateStudent = () => {
 
     const fetchGroups = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/getGroups'); // Replace with your actual endpoint
+        const response = await getGroups();
         setGroups(response.data);
       } catch (error) {
         console.error('Error fetching groups:', error);
@@ -59,7 +59,7 @@ const UpdateStudent = () => {
 
   const handleSave = async () => {
     try {
-      await axios.put(`http://localhost:5000/updateStudent/${student_id}`, form);
+      await updateStudent(student_id, form);
       navigate(`/getStudent/${student_id}`);
     } catch (error) {
       console.error('Error updating student:', error);
@@ -94,16 +94,6 @@ const UpdateStudent = () => {
             margin="normal"
           />
           <TextField
-            label="Birthday"
-            type="date"
-            name="birthday"
-            value={form.birthday ? form.birthday.split('T')[0] : ''}
-            onChange={handleInputChange}
-            fullWidth
-            margin="normal"
-            InputLabelProps={{ shrink: true }}
-          />
-          <TextField
             label="Class Level"
             name="class_level"
             value={form.class_level || ''}
@@ -120,9 +110,43 @@ const UpdateStudent = () => {
             margin="normal"
           />
           <TextField
+            label="Birthday"
+            type="date"
+            name="birthday"
+            value={form.birthday ? form.birthday.split('T')[0] : ''}
+            onChange={handleInputChange}
+            fullWidth
+            margin="normal"
+            InputLabelProps={{ shrink: true }}
+          />
+          <TextField
             label="Mobile Number"
             name="mobile_number"
             value={form.mobile_number || ''}
+            onChange={handleInputChange}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="Address"
+            name="address"
+            value={form.address || ''}
+            onChange={handleInputChange}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="Parent Name"
+            name="parent_name"
+            value={form.parent_name || ''}
+            onChange={handleInputChange}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="Parent Number"
+            name="parent_number"
+            value={form.parent_number || ''}
             onChange={handleInputChange}
             fullWidth
             margin="normal"

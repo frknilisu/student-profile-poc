@@ -1,9 +1,9 @@
 // src/components/StudentsOverview.js
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { TextField, Grid, Card, CardContent, Typography, Container, MenuItem, Select, InputLabel, InputAdornment, FormControl, Box, CardActions, Button } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from 'react-router-dom';
+import { getStudents } from '../services/studentService';
 
 const StudentsOverview = () => {
   const [students, setStudents] = useState([]);
@@ -15,7 +15,7 @@ const StudentsOverview = () => {
   useEffect(() => {
     const fetchStudents = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/getStudents');
+        const response = await getStudents();
         setStudents(response.data);
         setFilteredStudents(response.data);
       } catch (error) {
@@ -130,7 +130,7 @@ const StudentsOverview = () => {
                 </Typography>
               </CardContent>
               <CardActions>
-                <Button size="small" color="primary" onClick={() => handleViewDetails(student.student_id)}>
+                <Button size="small" color="primary" onClick={() => handleViewDetails(student._id)}>
                   View Details
                 </Button>
               </CardActions>

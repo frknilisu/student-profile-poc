@@ -1,8 +1,6 @@
 // src/components/UpdateStudent.js
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
-// import { Container, Typography, TextField, Button, Paper, Box, Divider } from '@mui/material';
 import {
   Container,
   Typography,
@@ -10,12 +8,9 @@ import {
   Button,
   Paper,
   Box,
-  Divider,
-  MenuItem,
-  Select,
-  InputLabel,
-  FormControl
+  Divider
 } from '@mui/material';
+import { getGroup, updateGroup } from '../services/groupService';
 
 
 const UpdateGroup = () => {
@@ -27,7 +22,7 @@ const UpdateGroup = () => {
   useEffect(() => {
     const fetchGroupDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/getGroup/${group_id}`);
+        const response = await getGroup(group_id);
         setGroup(response.data.group);
         setForm(response.data.group);
       } catch (error) {
@@ -48,7 +43,7 @@ const UpdateGroup = () => {
 
   const handleSave = async () => {
     try {
-      await axios.put(`http://localhost:5000/updateGroup/${group_id}`, form);
+      await updateGroup(group_id, form);
       navigate(`/getGroup/${group_id}`);
     } catch (error) {
       console.error('Error updating student:', error);

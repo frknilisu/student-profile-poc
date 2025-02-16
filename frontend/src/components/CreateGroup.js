@@ -1,22 +1,60 @@
 // src/components/CreateGroup.js
-import React, { useState } from 'react';
-import axios from 'axios';
-import { Container, TextField, Button, Typography, Box } from '@mui/material';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import {
+  Container,
+  Typography,
+  Button,
+  Box,
+  MenuItem,
+  Select,
+  InputLabel,
+  FormControl
+} from '@mui/material';
+import { createGroup } from '../services/groupService';
+import { getSupervisors } from '../services/supervisorService';
+import { getStudents } from '../services/studentService';
 
 const CreateGroup = () => {
-  const [supervisorName, setSupervisorName] = useState('');
-  const [group_id, setGroupId] = useState('');
+  const [supervisor_id, setSupervisorId] = useState('');
+  const [supervisors, setSupervisors] = useState([]);
+  const [students, setStudents] = useState([]);
+  const [selectedStudents, setSelectedStudents] = useState([]);
+  const [form, setForm] = useState({});
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchSupervisors = async () => {
+      try {
+        const response = await getSupervisors();
+        setSupervisors(response.data);
+      } catch (error) {
+        console.error('Error fetching supervisors:', error);
+      }
+    };
+
+    const fetchStudents = async () => {
+      try {
+        const response = await getStudents();
+        setStudents(response.data);
+      } catch (error) {
+        console.error('Error fetching students:', error);
+      }
+    };
+
+    fetchSupervisors();
+    fetchStudents();
+  }, []);
   
   const handleCreateGroup = async () => {
     try {
-      await axios.post('http://localhost:5000/createGroup', {
-        supervisor_name: supervisorName,
-        group_id: group_id
+      await createGroup({ 
+        supervisor_id: form.supervisor_id, 
+        student_ids: selectedStudents 
       });
-      setSupervisorName('');
-      setGroupId('');
+
+      setSupervisorId('');
+      setSelectedStudents([]);
       alert('Group created successfully');
       
       navigate('/');
@@ -25,27 +63,57 @@ const CreateGroup = () => {
     }
   };
 
+  const handleSupervisorChange = (event) => {
+    const { name, value } = event.target;
+    const supervisor = supervisors.find(s => s._id === value);
+    setForm({
+      ...form,
+      supervisor_id: supervisor._id,
+      supervisor_name: supervisor.name
+    });
+  };
+
+  const handleStudentChange = (event) => {
+    setSelectedStudents(event.target.value);
+  };
+
   return (
     <Container maxWidth="sm" sx={{ mt: 5 }}>
       <Typography variant="h4" component="h1" gutterBottom>
         Create New Group
       </Typography>
       <Box sx={{ mb: 2 }}>
-        <TextField
-          label="Supervisor Name"
-          value={supervisorName}
-          onChange={(e) => setSupervisorName(e.target.value)}
-          fullWidth
-          variant="outlined"
-          sx={{ mb: 2 }}
-        />
-        <TextField
-          label="Group ID"
-          value={group_id}
-          onChange={(e) => setGroupId(e.target.value)}
-          fullWidth
-          variant="outlined"
-        />
+        <FormControl fullWidth margin="normal">
+          <InputLabel>Supervisor</InputLabel>
+          <Select
+            name="supervisor_id"
+            value={form.supervisor_id || ''}
+            onChange={handleSupervisorChange}
+          >
+            {supervisors.map((supervisor) => (
+              <MenuItem key={supervisor._id} value={supervisor._id}>
+                {`Group ${supervisor.name}`}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </Box>
+      <Box sx={{ mb: 2 }}>
+        <FormControl fullWidth margin="normal">
+          <InputLabel>Students</InputLabel>
+          <Select
+            multiple
+            value={selectedStudents}
+            onChange={handleStudentChange}
+            renderValue={(selected) => selected.join(', ')}
+          >
+            {students.map((student) => (
+              <MenuItem key={student._id} value={student._id}>
+                {student.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
       </Box>
       <Button variant="contained" color="primary" onClick={handleCreateGroup}>
         Create Group
