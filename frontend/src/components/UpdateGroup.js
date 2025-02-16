@@ -1,8 +1,6 @@
 // src/components/UpdateStudent.js
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
-// import { Container, Typography, TextField, Button, Paper, Box, Divider } from '@mui/material';
 import {
   Container,
   Typography,
@@ -10,11 +8,7 @@ import {
   Button,
   Paper,
   Box,
-  Divider,
-  MenuItem,
-  Select,
-  InputLabel,
-  FormControl
+  Divider
 } from '@mui/material';
 import { getGroup, updateGroup } from '../services/groupService';
 

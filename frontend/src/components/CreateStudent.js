@@ -7,10 +7,6 @@ import {
   TextField,
   Button,
   Box,
-  MenuItem,
-  Select,
-  InputLabel,
-  FormControl,
   Grid
 } from '@mui/material';
 import { createStudent } from '../services/studentService';
