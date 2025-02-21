@@ -1,7 +1,8 @@
 from bson import ObjectId
+from .WeeklyRecord import WeeklyRecord
 
 class Student:
-    def __init__(self, name, surname, class_level, school, birthday, mobile_number, address, parent_name, parent_number, supervisor_name="", _id=None):
+    def __init__(self, name, surname, class_level, school, birthday, mobile_number, address, parent_name, parent_number, weekly_records=None, _id=None):
         if _id:
             self._id = ObjectId(_id)
         self.name = name
@@ -13,8 +14,7 @@ class Student:
         self.address = address
         self.parent_name = parent_name
         self.parent_number = parent_number
-        # self.is_active = True if group_id else False
-        # self.supervisor_name = supervisor_name
+        self.weekly_records = [WeeklyRecord(**record) for record in weekly_records] if weekly_records else []
 
     def to_dict(self):
         data = {
@@ -27,7 +27,7 @@ class Student:
             "address": self.address,
             "parent_name": self.parent_name,
             "parent_number": self.parent_number,
-            # "supervisor_name": self.supervisor_name
+            "weekly_records": [record.to_dict() for record in self.weekly_records]
         }
         if hasattr(self, '_id') and self._id:
             data["_id"] = str(self._id)
